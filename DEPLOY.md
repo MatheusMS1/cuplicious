@@ -1,10 +1,9 @@
 # Publicação gratuita: Netlify (site) + Render (API) + Turso (banco)
 
-Ordem: banco, API e, por último, o site. Os planos gratuitos mudam; confira os termos de cada serviço no cadastro.
+Ordem: banco, API e, por último, o site.
 
 ## 0. Ajuste no seu computador (uma vez)
     cd backend
-    npm uninstall better-sqlite3
     npm install @libsql/client
     npm run dev
 

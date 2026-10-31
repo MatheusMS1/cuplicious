@@ -74,3 +74,36 @@ nav .cart-btn{background:var(--black);color:#fff;border-radius:99px;padding:8px 
 .actions button:hover{background:var(--black);color:#fff}
 .actions .danger{border-color:#B3123B;color:#B3123B}
 .actions .danger:hover{background:#B3123B;color:#fff}
+.step{display:flex;align-items:center;justify-content:space-between;background:var(--pink);border-radius:10px;padding:4px}
+.step button{width:36px;height:36px;border:0;border-radius:8px;background:var(--black);color:#fff;font-size:1.2rem}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.filters input,.filters select,.order select{padding:9px 12px;border:2px solid var(--blush);border-radius:10px;background:#fff;font:inherit}
+.filters label{display:flex;align-items:center;gap:6px;font-weight:700}
+.pager{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:20px}
+.pager button{background:#fff;border:2px solid var(--black);border-radius:99px;padding:6px 16px;font-weight:700}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.order.off{opacity:.55}
+.code{font-size:1.4rem}.code b{letter-spacing:.2em;color:var(--pink);background:var(--black);padding:4px 12px;border-radius:8px}
+.hint{font-size:.9rem;color:#555;margin:4px 0}
+.notice{background:var(--pink);color:var(--black);padding:8px 14px;border-radius:10px;font-weight:700}
+.muted{color:#555;font-size:.85rem}
+
+
+
+.category-filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.category-filters button{border:2px solid var(--blush);background:#fff;border-radius:99px;padding:8px 16px;font-weight:700}
+.category-filters button.on{background:var(--black);color:#fff;border-color:var(--black)}
+.category-tag{position:absolute;left:12px;top:12px;background:#fff;color:var(--black);border-radius:99px;padding:3px 10px;font-size:.75rem;font-weight:700}
+.customer-order-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.status-pill{display:inline-block;border-radius:99px;padding:5px 12px;font-size:.82rem;font-weight:700;background:#eee;color:#333}
+.status-novo{background:#fff0c2;color:#765300}
+.status-em_preparo{background:#e6e9ff;color:#333b91}
+.status-entregue{background:#dff5e5;color:#176333}
+.status-cancelado{background:#f8e1e5;color:#8b1e32}
+.report-list{display:grid;gap:8px;margin-top:18px}
+.report-row{display:grid;grid-template-columns:48px minmax(120px,1fr) auto auto;gap:14px;align-items:center;background:#fff;border:2px solid var(--blush);border-radius:12px;padding:12px 16px}
+.report-rank{color:var(--pink);font-size:1.15rem}
+.report-name{font-weight:700}
+.admin-form select{padding:12px 14px;border:2px solid var(--blush);border-radius:10px;background:#fff;font:inherit;width:100%}
+.cta:disabled{opacity:.6;cursor:wait}
+@media(max-width:560px){.report-row{grid-template-columns:38px 1fr;gap:6px}.report-row>*:nth-child(3),.report-row>*:nth-child(4){grid-column:2}}

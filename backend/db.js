@@ -12,7 +12,7 @@ const toObjects = (rs) => rs.rows.map((r) => Object.fromEntries(rs.columns.map((
 export const all = async (sql, args = []) => toObjects(await db.execute({ sql, args }));
 export const get = async (sql, args = []) => (await all(sql, args))[0];
 export const run = (sql, args = []) => db.execute({ sql, args });
-export const batch = (stmts) => db.batch(stmts, 'write'); // tudo ou nada
+export const batch = (stmts) => db.batch(stmts, 'write');
 
 await batch([
   `CREATE TABLE IF NOT EXISTS cupcakes (
@@ -32,19 +32,30 @@ await batch([
   'CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id)',
 ]);
 
+const hasCol = async (t, c) => (await all(`PRAGMA table_info(${t})`)).some((x) => x.name === c);
+const hadCategory = await hasCol('cupcakes', 'category');
+for (const [t, c, def] of [['orders', 'status', "TEXT NOT NULL DEFAULT 'novo'"], ['orders', 'claim_hash', 'TEXT'], ['orders', 'request_key', 'TEXT'], ['cupcakes', 'active', 'INTEGER NOT NULL DEFAULT 1'], ['cupcakes', 'category', "TEXT NOT NULL DEFAULT 'classicos'"], ['users', 'sec_question', 'TEXT'], ['users', 'sec_salt', 'TEXT'], ['users', 'sec_hash', 'TEXT']])
+  if (!(await hasCol(t, c))) await run(`ALTER TABLE ${t} ADD COLUMN ${c} ${def}`);
+
+if (!hadCategory) {
+  await run("UPDATE cupcakes SET category = 'especiais' WHERE name IN ('Framboesa Pop', 'Pistache Chic', 'Limão Siciliano', 'Red Velvet')");
+}
+await run('CREATE TABLE IF NOT EXISTS password_resets (email TEXT PRIMARY KEY, code_hash TEXT NOT NULL, expires_at TEXT NOT NULL)');
+await run('CREATE UNIQUE INDEX IF NOT EXISTS idx_orders_user_request_key ON orders(user_id, request_key) WHERE request_key IS NOT NULL');
+
 // Cardápio inicial: só é gravado se a tabela estiver vazia.
 const seed = [
-  [1, 'Framboesa Pop', 'Baunilha, creme de framboesa e chocolate branco.', 950, '#FF3D9A', 'Mais pedido'],
-  [2, 'Pistache Chic', 'Massa de pistache com cobertura de cream cheese.', 1100, '#8FCB9B', null],
-  [3, 'Brigadeiro Real', 'Chocolate 50% recheado com brigadeiro cremoso.', 1000, '#B9694F', null],
-  [4, 'Limão Siciliano', 'Massa cítrica, glacê de limão e raspas.', 900, '#F5C842', 'Novo'],
-  [5, 'Doce de Leite', 'Massa amanteigada recheada com doce de leite cremoso.', 1050, '#D9964B', null],
-  [6, 'Morango com Chantilly', 'Baunilha, chantilly de morango e pedacinhos da fruta.', 1050, '#E5484D', null],
-  [7, 'Red Velvet', 'Massa aveludada com cobertura de cream cheese.', 1200, '#B3123B', 'Favorito'],
-  [8, 'Cookies & Cream', 'Massa de chocolate, creme de baunilha e farelo de biscoito.', 1100, '#8E8E93', null],
+  [1, 'Framboesa Pop', 'Baunilha, creme de framboesa e chocolate branco.', 950, '#FF3D9A', 'Mais pedido', 'especiais'],
+  [2, 'Pistache Chic', 'Massa de pistache com cobertura de cream cheese.', 1100, '#8FCB9B', null, 'especiais'],
+  [3, 'Brigadeiro Real', 'Chocolate 50% recheado com brigadeiro cremoso.', 1000, '#B9694F', null, 'classicos'],
+  [4, 'Limão Siciliano', 'Massa cítrica, glacê de limão e raspas.', 900, '#F5C842', 'Novo', 'especiais'],
+  [5, 'Doce de Leite', 'Massa amanteigada recheada com doce de leite cremoso.', 1050, '#D9964B', null, 'classicos'],
+  [6, 'Morango com Chantilly', 'Baunilha, chantilly de morango e pedacinhos da fruta.', 1050, '#E5484D', null, 'classicos'],
+  [7, 'Red Velvet', 'Massa aveludada com cobertura de cream cheese.', 1200, '#B3123B', 'Favorito', 'especiais'],
+  [8, 'Cookies & Cream', 'Massa de chocolate, creme de baunilha e farelo de biscoito.', 1100, '#8E8E93', null, 'classicos'],
 ];
 if ((await get('SELECT COUNT(*) AS n FROM cupcakes')).n === 0) {
   await batch(seed.map((args) => ({
-    sql: 'INSERT INTO cupcakes (id, name, description, price_cents, color, tag) VALUES (?, ?, ?, ?, ?, ?)', args,
+    sql: 'INSERT INTO cupcakes (id, name, description, price_cents, color, tag, category) VALUES (?, ?, ?, ?, ?, ?, ?)', args,
   })));
 }

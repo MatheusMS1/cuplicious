@@ -4,7 +4,7 @@ Loja virtual de cupcakes com vitrine, carrinho, cadastro e login de clientes, hi
 
 ## Tecnologias
 - **Back end:** Node.js + Express
-- **Banco de dados:** SQLite (via `@libsql/client`): arquivo local no desenvolvimento e Turso na hospedagem
+- **Banco de dados:** SQLite (via `@libsql/client`): Utilizado Turso na hospedagem
 - **Front end:** React (Vite)
 
 ## Estrutura
@@ -16,7 +16,7 @@ Loja virtual de cupcakes com vitrine, carrinho, cadastro e login de clientes, hi
 ### 1. Back end
     cd backend
     npm install
-    copy .env.example .env      (Windows) e troque ADMIN_KEY por uma senha sua
+    copy .env.example .env (Windows) e troque ADMIN_KEY por uma senha sua
     npm run dev
 
 A API sobe em http://localhost:3001 e o arquivo `cuplicious.db` é criado sozinho, já com o cardápio inicial.
@@ -38,10 +38,7 @@ Acesse http://localhost:5173
 ## Publicação
 Passo a passo de hospedagem (Netlify, Render e Turso) em `DEPLOY.md`.
 
-## Personalização
-Nome, textos, contatos e cores da marca ficam em `frontend-app/src/brand.js`.
 
 ## Limitações conhecidas
 - Hospedagem gratuita: o back end "dorme" após 15 min sem acesso e o primeiro acesso demora cerca de 1 minuto (veja `DEPLOY.md`)
-- Sem pagamento online, entrega/frete, fotos reais dos produtos e status do pedido
-- Sessões de login não expiram
+
