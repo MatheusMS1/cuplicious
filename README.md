@@ -38,9 +38,6 @@ Acesse http://localhost:5173
 - Painel do dono ("Área do dono", no rodapé): lista de pedidos, cadastro, edição e remoção de produtos
 - Dados guardados em banco SQLite
 
-## Publicação
-Passo a passo de hospedagem (Netlify, Render e Turso) em `DEPLOY.md`.
-
 
 ## Limitações conhecidas
 - Hospedagem gratuita: o back end "dorme" após 15 min sem acesso e o primeiro acesso demora cerca de 1 minuto (veja `DEPLOY.md`)
