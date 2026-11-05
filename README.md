@@ -11,7 +11,10 @@ Loja virtual de cupcakes com vitrine, carrinho, cadastro e login de clientes, hi
     backend/        API, banco de dados (db.js) e regras de negócio (server.js)
     frontend-app/   aplicação React (src/App.jsx, Admin.jsx, brand.js, styles.css)
 
-## Como rodar (Node.js 20.19 ou superior)
+## Para acessar a aplicação funcionando utilize o seguinte link:
+    https://cuplicious.netlify.app/
+
+## Como rodar localmente (Node.js 20.19 ou superior)
 
 ### 1. Back end
     cd backend
